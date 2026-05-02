@@ -13,7 +13,7 @@ void start()
     string uId;
     while (true)
     {
-        // random generate for capcha
+        // random generate for CAPTCHA
         // Name input loop
         cout << "\nEnter Your Name: ";
         cin.ignore();
@@ -31,7 +31,7 @@ void start()
 
     cout << "Welcome " << userName << "!\n";
 
-    // 🔹 UID input loop
+    // UID input loop
     while (true)
     {
         cout << "Enter Your UID: ";
@@ -51,23 +51,23 @@ void start()
         }
     }
 
-    // capcha verification
+    // CAPTCHA verification
+    srand(time(0));
     while (true)
     {
-        srand(time(0));
-        int capcha = (rand() % 100000);
-        int capchaEnter;
-        cout << "Capcha: " << capcha << endl;
-        cout << "Enter Capcha : ";
-        cin >> capchaEnter;
-        if (capchaEnter != capcha)
+        int captcha = (rand() % 900000) + 100000;
+        int captchaEnter;
+        cout << "CAPTCHA: " << captcha << endl;
+        cout << "Enter CAPTCHA : ";
+        cin >> captchaEnter;
+        if (captchaEnter != captcha)
         {
-            cout << "Invalid Capcha!\nTry again." << endl;
+            cout << "Invalid CAPTCHA!\nTry again." << endl;
             continue;
         }
         else
         {
-            cout << "Correct Capcha" << endl;
+            cout << "Correct CAPTCHA" << endl;
             break;
         }
     }
@@ -114,7 +114,6 @@ void quit()
 
 int main()
 {
-
     // Interface for EVM Machine
     int input;
     do
@@ -127,14 +126,14 @@ int main()
         cout << "[][][][][][][][][][]" << endl;
 
         // Greeting from machine
-        cout << "\nWelcome to EVM Machine"
+        cout << "\n===Welcome to EVM Machine==="
              << endl;
         // user input options
         cout << "\nChoose Your Option:- " << endl;
-        cout << "1.Start" << endl;
-        cout << "2.How-To-Use" << endl;
-        cout << "3.About" << endl;
-        cout << "4.Exit" << endl;
+        cout << "[1].Start" << endl;
+        cout << "[2].How-To-Use" << endl;
+        cout << "[3].About" << endl;
+        cout << "[4].Exit" << endl;
         cout << "Select Your Option: ";
         // do-while loop
 
