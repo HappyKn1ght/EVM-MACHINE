@@ -3,7 +3,6 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <time.h>
-// #include <limits>
 
 using namespace std;
 // function for user information
@@ -114,6 +113,7 @@ int main()
 {
     // Interface for EVM Machine
     int input;
+    // do-while loop
     do
     {
         system("cls");
@@ -133,7 +133,6 @@ int main()
         cout << "[3].About" << endl;
         cout << "[4].Exit" << endl;
         cout << "Select Your Option: ";
-        // do-while loop
 
         cin >> input;
         // switch statement
@@ -156,8 +155,6 @@ int main()
         }
 
         cout << "\nPress Enter to continue...";
-        // cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        // cin.get();
         cin.ignore();
         cin.get();
     } while (input != 4);
