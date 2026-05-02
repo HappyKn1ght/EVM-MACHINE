@@ -11,12 +11,12 @@ void start()
 {
     string userName;
     string uId;
+    cin.ignore();
     while (true)
     {
         // random generate for CAPTCHA
         // Name input loop
         cout << "\nEnter Your Name: ";
-        cin.ignore();
         getline(cin, userName);
 
         if (userName.empty())
@@ -106,9 +106,7 @@ void about()
 // function to exit
 void quit()
 {
-    cout << "Exiting..." << endl;
-    system("pause");
-    cout << "Exited" << endl;
+    cout << "Thanks for using EVM Machine!\nGoodbye!" << endl;
     exit(0);
 }
 
