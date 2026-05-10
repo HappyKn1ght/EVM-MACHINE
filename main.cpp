@@ -7,6 +7,7 @@
 using namespace std;
 int votes[5] = {0, 0, 0, 0, 0};
 string votedUIDs[100];
+string votedNames[100];
 int totalVoters = 0;
 bool pollingOpen = true;
 string candidates[5] =
@@ -20,7 +21,6 @@ string candidates[5] =
 // function to vote
 void vote()
 {
-    // checking if polling is open
     if (pollingOpen == false)
     {
         cout << "Polling is closed! Cannot vote." << endl;
@@ -34,30 +34,56 @@ void vote()
         {
             cout << i + 1 << ". " << candidates[i] << endl;
         }
-        // takeing votes
 
+        // taking votes with loop
         int choice;
-        cout << "\nEnter candidate number (1-5): ";
-        cin >> choice;
-
-        if (choice < 1 || choice > 5)
+        while (true)
         {
-            cout << "Invalid choice!" << endl;
-        }
-        else
-        {
-            char confirm;
-            cout << "Confirm vote for " << candidates[choice - 1] << "? (Y/N): ";
-            cin >> confirm;
+            cout << "\nEnter candidate number (1-5): ";
 
-            if (confirm == 'Y' || confirm == 'y')
+            string input;
+            getline(cin, input);
+
+            choice = atoi(input.c_str());
+
+            if (choice < 1 || choice > 5)
             {
-                votes[choice - 1]++;
-                cout << "Vote cast successfully!\nThank you for voting!" << endl;
+                cout << "Invalid choice! Enter between 1-5." << endl;
             }
             else
             {
+                break;
+            }
+        }
+
+        // confirmation with loop
+        char confirm;
+        while (true)
+        {
+            cout << "Confirm vote for " << candidates[choice - 1] << "? (Y/N): ";
+            confirm = cin.get();
+
+            if (confirm == 'Y' || confirm == 'y')
+            {
+                cin.ignore(1000, '\n');
+                votes[choice - 1]++;
+                cout << "Vote cast successfully!\nThank you for voting!" << endl;
+                break;
+            }
+            else if (confirm == 'N' || confirm == 'n')
+            {
+                cin.ignore(1000, '\n');
                 cout << "Vote cancelled!" << endl;
+                break;
+            }
+            else if (confirm == '\n')
+            {
+                cout << "Cannot be empty! Try again." << endl;
+            }
+            else
+            {
+                cin.ignore(1000, '\n');
+                cout << "Invalid! Enter Y or N only!" << endl;
             }
         }
     }
@@ -112,10 +138,12 @@ void start()
     while (true)
     {
         int captcha = (rand() % 900000) + 100000;
-        int captchaEnter;
         cout << "CAPTCHA: " << captcha << endl;
-        cout << "Enter CAPTCHA : ";
-        cin >> captchaEnter;
+        cout << "Enter CAPTCHA: ";
+        string input;
+        getline(cin, input);
+
+        int captchaEnter = atoi(input.c_str());
         if (captchaEnter != captcha)
         {
             cout << "Invalid CAPTCHA!\nTry again." << endl;
@@ -150,7 +178,34 @@ void start()
     }
 
     cout << "\nVerification Complete!\n";
-    vote(); // vote function call after verification completed
+    // checking if already voted
+    bool alreadyVoted = false;
+    int foundIndex = -1;
+    for (int i = 0; i < totalVoters; i++)
+    {
+        if (votedUIDs[i] == uId)
+        {
+            alreadyVoted = true;
+            foundIndex = i;
+            break;
+        }
+    }
+
+    if (alreadyVoted)
+    {
+        cout << "\nThis UID has already been used!" << endl;
+        cout << "Previously voted by: " << votedNames[foundIndex] << endl;
+        cout << "UID: " << uId << endl;
+        cout << "You cannot vote with this UID!" << endl;
+        return;
+    }
+    else
+    {
+        votedUIDs[totalVoters] = uId;
+        votedNames[totalVoters] = userName;
+        totalVoters++;
+        vote(); // vote function call after verification completed
+    }
 }
 // function to 2.How-To-Use
 void howToUse()
@@ -199,8 +254,9 @@ int main()
         cout << "\n===Welcome to EVM Machine==="
              << endl;
         // user input options
-        cout << "\nChoose Your Option:- " << endl;
-        cout << "[1].Start" << endl;
+        cout << "[1].Start Voting" << endl;
+        // cout << "[2].Close Polling" << endl;
+        // cout << "[3].Results" << endl;
         cout << "[2].How-To-Use" << endl;
         cout << "[3].About" << endl;
         cout << "[4].Exit" << endl;
