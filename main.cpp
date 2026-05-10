@@ -5,6 +5,63 @@
 #include <time.h>
 
 using namespace std;
+int votes[5] = {0, 0, 0, 0, 0};
+string votedUIDs[100];
+int totalVoters = 0;
+bool pollingOpen = true;
+string candidates[5] =
+    {
+        "Narendra Modi    - BJP",
+        "Rahul Gandhi     - INC",
+        "Arvind Kejriwal  - AAP",
+        "Mayawati         - BSP",
+        "NOTA"};
+
+// function to vote
+void vote()
+{
+    // checking if polling is open
+    if (pollingOpen == false)
+    {
+        cout << "Polling is closed! Cannot vote." << endl;
+        return;
+    }
+    else
+    {
+        // showing candidates
+        cout << "\n--- Candidates ---" << endl;
+        for (int i = 0; i < 5; i++)
+        {
+            cout << i + 1 << ". " << candidates[i] << endl;
+        }
+        // takeing votes
+
+        int choice;
+        cout << "\nEnter candidate number (1-5): ";
+        cin >> choice;
+
+        if (choice < 1 || choice > 5)
+        {
+            cout << "Invalid choice!" << endl;
+        }
+        else
+        {
+            char confirm;
+            cout << "Confirm vote for " << candidates[choice - 1] << "? (Y/N): ";
+            cin >> confirm;
+
+            if (confirm == 'Y' || confirm == 'y')
+            {
+                votes[choice - 1]++;
+                cout << "Vote cast successfully!\nThank you for voting!" << endl;
+            }
+            else
+            {
+                cout << "Vote cancelled!" << endl;
+            }
+        }
+    }
+}
 // function for user information
 void start()
 {
@@ -74,11 +131,26 @@ void start()
     // Verification animation
     for (int i = 0; i <= 100; i++)
     {
-        cout << "\rVerifying UID... " << i << "%" << flush;
+        int barWidth = 20; // total size of bar
+
+        int filled = (i * barWidth) / 100; // how many
+        cout << "\r[";
+
+        // print filled part
+        for (int j = 0; j < filled; j++)
+            cout << "#";
+
+        // print empty part
+        for (int j = filled; j < barWidth; j++)
+            cout << ".";
+
+        cout << "] " << i << "%" << flush;
+
         Sleep(30);
     }
 
     cout << "\nVerification Complete!\n";
+    vote(); // vote function call after verification completed
 }
 // function to 2.How-To-Use
 void howToUse()
